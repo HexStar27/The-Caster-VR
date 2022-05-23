@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 
@@ -143,11 +144,11 @@ public abstract class SpellStructure : MonoBehaviour
         }
     }
 
-    public System.Collections.IEnumerator Ejecucion()
+    public IEnumerator Ejecucion()
     {
         Lanzar();   
         yield return new WaitForSeconds(duracion);
-        if (!(beenHit && dieOnHit)) Terminar();
+        if (this != null) Terminar();
     }
 
     public virtual void EstablecerTipo(SpellType tipo)

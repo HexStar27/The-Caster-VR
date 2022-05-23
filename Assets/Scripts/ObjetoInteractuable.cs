@@ -61,15 +61,17 @@ public class ObjetoInteractuable : MonoBehaviour
     float old_vel;
 
     //Materiales
-    [Header("Materiales de estado")]
-    [SerializeField] Material[] materiales;
+    Material materialPropio;
     int materialActual = 0;
+    GameObject particulillas;
 
     private void Awake()
     {
         if (_col == null) if(!TryGetComponent(out _col)) Debug.LogError("FALTA COLLIDER");
         if (_rb == null) if(!TryGetComponent(out _rb)) Debug.LogError("FALTA RIGIDBODY");
         if (_renderer == null) if (!TryGetComponent(out _renderer)) Debug.LogError("FALTA RENDERER???");
+
+        materialPropio = _renderer.material;
 
         interacciones.Add("Quemar", Quemar);
         interacciones.Add("Desintegrar", Desintegrar);
@@ -138,24 +140,33 @@ public class ObjetoInteractuable : MonoBehaviour
             ConstitucionRestante -= (t * debilidadFuego / (1+Mojadez));
             Mojadez -= t * debilidadFuego*0.85f;
 
-            CambiarMaterial(2);
+            CambiarMaterial(2);//Fuego
         }
-        if (Mojadez > 0)
+        else if (Mojadez > 0)
         {
             Mojadez -= t*Mojadez*0.2 + friccion;
-            CambiarMaterial(1);
+            CambiarMaterial(1);//Agua
         }
-        else CambiarMaterial(0);
+        else CambiarMaterial(0);//Nada
 
         old_vel = _rb.velocity.magnitude;
     }
 
-    public void CambiarMaterial(int material)
+    //0 -> Normar
+    //1 -> Mojado
+    //2 -> Quemado
+    public void CambiarMaterial(int material) 
     {
-        if (material < materiales.Length && materialActual != material)
+        if (material < BancoEstadosInteractuables.Instancia.materiales.Length && materialActual != material)
         {
             materialActual = material;
-            _renderer.material = materiales[material];
+            
+            if (material == 0) _renderer.material = materialPropio;
+            else _renderer.material = BancoEstadosInteractuables.Instancia.materiales[material];
+
+            //Aplicar partículas
+            if (particulillas != null) Destroy(particulillas);
+            if(material != 0) particulillas = Instantiate(BancoEstadosInteractuables.Instancia.particleSystems[material], transform);
         }
     }
 

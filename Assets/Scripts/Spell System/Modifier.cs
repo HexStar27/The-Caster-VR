@@ -12,7 +12,7 @@ public class Modifier
 
 		funcionesBasicas.Add("Rebote", false);
 		funcionesBasicas.Add("Gravity", false);
-		funcionesBasicas.Add("Trigger", false);
+		funcionesBasicas.Add("Trigger", true);
 		funcionesBasicas.Add("DieOnHit", true);
 		funcionesBasicas.Add("Trail", false);
 		funcionesBasicas.Add("OnHit", false);

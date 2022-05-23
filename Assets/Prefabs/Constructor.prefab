@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4714076377115086705
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4714076377115086706}
+  - component: {fileID: 4714076377115086707}
+  - component: {fileID: 4714076377115086709}
+  - component: {fileID: 4714076377115086708}
+  - component: {fileID: 2057773011}
+  m_Layer: 0
+  m_Name: Constructor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4714076377115086706
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4714076377115086705}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.6559687, y: 8.144482, z: -3.6059704}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4714076377115086707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4714076377115086705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c9fbf760aa83d74480a38a7cccd34b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugMode: 0
+  hechizoPrefab: {fileID: 8334853111299317046, guid: bc96767e8a70d84418a61713a30b50db, type: 3}
+  infraccion: 0
+--- !u!114 &4714076377115086709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4714076377115086705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c233f1276230a1447b37ca6cdf35452c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  st:
+  - {fileID: 11400000, guid: 58bb28ed799f97940bab7e2f5c34e5d3, type: 2}
+  - {fileID: 11400000, guid: 97ff831441595cd4cb43eedbb85cbf6a, type: 2}
+  - {fileID: 11400000, guid: d3533e690ce3a34479d77c3fba0a9a6d, type: 2}
+  sh:
+  - {fileID: 11400000, guid: 37b3ba460a158a24b9e3ea1fd8821bbb, type: 2}
+  - {fileID: 11400000, guid: 3f758eb9869614b449869c10717631db, type: 2}
+--- !u!114 &4714076377115086708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4714076377115086705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa6ca848336cd89409f07644db2b8f55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materialesFisicos:
+  - {fileID: 13400000, guid: 3ed92bb7c00ff554f88c3a677968aa5d, type: 2}
+  - {fileID: 13400000, guid: 010004c341f6c4945be55d1f6cc001e4, type: 2}
+  - {fileID: 13400000, guid: 24ca5b9c913b006469310e977567a0d3, type: 2}
+  nombres:
+  - Normal
+  - Mojado
+  - Rebote
+--- !u!114 &2057773011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4714076377115086705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d2a99e76fc9de440ab031497c037430, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materiales:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: b9ed0811797201444ac2219e9757b6b9, type: 2}
+  - {fileID: 10756, guid: 0000000000000000e000000000000000, type: 0}

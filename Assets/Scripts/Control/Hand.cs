@@ -16,7 +16,7 @@ public class Hand : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        mesh.GetComponentInChildren<SkinnedMeshRenderer>();
+        mesh = GetComponentInChildren<SkinnedMeshRenderer>();
     }
 
     void Update()

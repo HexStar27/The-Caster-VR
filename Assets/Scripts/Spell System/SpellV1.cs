@@ -11,6 +11,8 @@ using UnityEngine.VFX;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer), typeof(Animator)), RequireComponent(typeof(Rigidbody))]
 public class SpellV1 : SpellStructure
 {
+	public static string tagInteractuable = "Interactuable";
+
 	[SerializeField] SpellType _tipo;
 	[SerializeField] Shape _efecto;
 	/// El transform de un GameObject hijo de este, sirve para que unity se encargue de calcular dinámicamente 
@@ -18,7 +20,7 @@ public class SpellV1 : SpellStructure
 	[SerializeField] Transform _referenciaCasteoPorTrigger;
 	[SerializeField] VisualEffect[] _vfx = new VisualEffect[0];
 	bool[] _useVFXPreCasted = new bool[0];
-	Action _efectoTipo = ()=>{ };
+	Action<Collider> _efectoTipo = (Collider c)=>{ };
 
 	[SerializeField] Animator _anim;
 	[SerializeField] MeshRenderer _meshRen;
@@ -27,6 +29,8 @@ public class SpellV1 : SpellStructure
 
 	Vector3 orientation = Vector3.zero;
 	protected bool willBeTrigger = false;
+
+	public bool cast = false;
 
 	public override void Lanzar()
 	{
@@ -37,7 +41,7 @@ public class SpellV1 : SpellStructure
 		}
 		base.Lanzar();
 		_meshCol.isTrigger = willBeTrigger;
-		Debug.Log("2" + _meshCol.isTrigger);
+		//Debug.Log("2" + _meshCol.isTrigger);
 	}
 
 	public override void EstablecerModificadores(Modifier modificadores)
@@ -74,6 +78,7 @@ public class SpellV1 : SpellStructure
 		if (modificadores.funcionesBasicas.TryGetValue("Trigger", out v))
 		{
 			willBeTrigger = v; //No hace nada...
+			_meshCol.isTrigger = v;
 		}
 		if (modificadores.funcionesBasicas.TryGetValue("DieOnHit", out v))
 		{
@@ -188,6 +193,7 @@ public class SpellV1 : SpellStructure
 
 	protected virtual void FixedUpdate()
 	{
+		if(cast) StartCoroutine(Ejecucion());
 		if(casted && aceleracion != 0)
 		{
 			_rb.AddForce(Time.fixedDeltaTime * aceleracion * orientation);
@@ -197,49 +203,63 @@ public class SpellV1 : SpellStructure
 	protected override void OnTriggerEnter(Collider other)
 	{
 		base.OnTriggerEnter(other);
-		_efectoTipo();
+		if (other.CompareTag(tagInteractuable))
+        {
+			_efectoTipo(other);
+		}
+		if (dieOnHit && casted) Destroy(gameObject);
 	}
 	protected override void OnTriggerStay(Collider other)
 	{
 		base.OnTriggerStay(other);
-		_efectoTipo();
+		if (other.CompareTag(tagInteractuable)) _efectoTipo(other);
 	}
 	protected override void OnTriggerExit(Collider other)
 	{
 		base.OnTriggerExit(other);
-		_efectoTipo();
+		if (other.CompareTag(tagInteractuable)) _efectoTipo(other);
 	}
 
 	///                                     ///
 	/// Funciones para Aplicación de Tipos  ///
 	///                                     ///
-	protected void Agua()
+	protected void Agua(Collider col)
 	{
-
+		ObjetoInteractuable oi= col.GetComponent<ObjetoInteractuable>();
+		oi.interacciones["Mojar"](50);
 	}
-	protected void Fuego()
+	protected void Fuego(Collider col)
 	{
-
+		ObjetoInteractuable oi = col.GetComponent<ObjetoInteractuable>();
+		oi.interacciones["Quemar"](50);
 	}
-	protected void Viento()
+	protected void Viento(Collider col)
 	{
-
+		ObjetoInteractuable oi = col.GetComponent<ObjetoInteractuable>();
+		oi.interacciones["Romper"](1);
+		Vector3 dir = (col.transform.position - trans.position).normalized;
+		col.attachedRigidbody.AddForce(dir*200);
 	}
-	protected void Tierra()
+	protected void Tierra(Collider col)
 	{
-
+		ObjetoInteractuable oi = col.GetComponent<ObjetoInteractuable>();
+		oi.interacciones["Romper"](5);
 	}
-	protected void Desintegracion()
+	protected void Desintegracion(Collider col)
 	{
-
+		ObjetoInteractuable oi = col.GetComponent<ObjetoInteractuable>();
+		oi.interacciones["Romper"](1000);
 	}
-	protected void Explosion()
+	protected void Explosion(Collider col)
 	{
-
+		ObjetoInteractuable oi = col.GetComponent<ObjetoInteractuable>();
+		float dist = (trans.position - col.ClosestPoint(trans.position)).magnitude + 1;
+		oi.interacciones["Romper"](10/dist);
 	}
-	protected void Puro()
+	protected void Puro(Collider col)
 	{
-
+		ObjetoInteractuable oi = col.GetComponent<ObjetoInteractuable>();
+		oi.interacciones["Romper"](10);
 	}
 	protected void EstablecerEfectoDeTipo(SpellType.Type tipo)
 	{

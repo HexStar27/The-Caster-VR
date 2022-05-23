@@ -14,7 +14,7 @@ public class GestureManager : MonoBehaviour
 	List<Gesture> listaAuxiliarPatrones = new List<Gesture>();
 	[SerializeField] Gesture[] patrones;
 	Gesture gestoActual;
-	BufferCircular<Vector3> puntos;
+	BufferCircular<Vector4> puntos;
 	public string gestureName = "DefaultName";
 
 	int trazaIdActual = 0;
@@ -29,21 +29,29 @@ public class GestureManager : MonoBehaviour
 	public List<string> patternNames = new List<string>();
 	public List<OnGesture> onGestureDic = new List<OnGesture>();
 
-	public void GrabarTraza()
-	{
-		trazaIdActual++;
-	}
 
+	//Pen up / Pen down
+	public void SetTrazando(bool value)
+    {
+		trazando = value;
+		if(!value)
+        {
+			GrabarTraza();
+        }
+    }
+
+	// Fin
 	public void TerminarGesto()
 	{
+		if (trazando) SetTrazando(false);
 		trazaIdActual = 0;
 
 		//Transformar buffer en "Gesture" y limpiar buffer
 		Point[] p = new Point[nPuntosActuales];
 		for(int i = 0; i < nPuntosActuales; i++)
 		{
-			Vector3 a = puntos.ValueAt_FAST_AND_DANGER(i);
-			p[i] = new Point(a.x, a.y, 0, (int)a.z);
+			Vector4 a = puntos.ValueAt_FAST_AND_DANGER(i);
+			p[i] = new Point(a.x, a.y, a.z, (int)a.w);
 		}
 		gestoActual = new Gesture(p,gestureName);
 
@@ -55,6 +63,7 @@ public class GestureManager : MonoBehaviour
 		return QPointCloudRecognizer.Classify(gestoActual, patrones);
 	}
 
+	//Action of gesture
 	public void ExecuteGesture()
 	{
 		onGestureDic[patternNames.BinarySearch(QPointCloudRecognizer.Classify(gestoActual, patrones))].Invoke();
@@ -65,31 +74,19 @@ public class GestureManager : MonoBehaviour
 		Debug.Log(Recognize());
 	}
 
-	private void AddPoint()
-	{
-		Vector3 pos;
-		if (usingPencil) pos = pencil.position;
-		else
-		{
-			nPuntosActuales++;
-			if (nPuntosActuales >= nPuntosMax) nPuntosActuales = nPuntosMax;
-			pos = Input.mousePosition;
-			pos.z = trazaIdActual;
-		}
-		puntos.Add(pos);
-	}
-
 	public void RefreshLine()
 	{
 		line.positionCount = nPuntosActuales;
-		Vector3[] a = puntos.ToArray();
+		Vector4[] a = puntos.ToArray();
+		Vector3[] b = new Vector3[a.Length];
 		for(int i = 0; i < a.Length; i++)
 		{
-			a[i] = camara.ScreenToWorldPoint(new Vector3(a[i].x, a[i].y, 1));
+			b[i] = camara.ScreenToWorldPoint(new Vector3(a[i].x, a[i].y, a[i].z));
 		}
-		line.SetPositions(a);
+		line.SetPositions(b);
 	}
 
+	//Añadir a base
 	public void AddPattern()
 	{
 		listaAuxiliarPatrones.Add(gestoActual);
@@ -98,6 +95,7 @@ public class GestureManager : MonoBehaviour
 		Clean();
 	}
 
+	//Reset
 	public void Clean()
 	{
 		line.positionCount = 0;
@@ -107,29 +105,37 @@ public class GestureManager : MonoBehaviour
 		nPuntosActuales = 0;
 	}
 
+	private void AddPoint()
+	{
+		Vector4 pos;
+		if (usingPencil) //No testeado
+		{
+			//Normalizacion de Posicion
+			Vector3 normalizedPos = pencil.position - camara.transform.position;
+			normalizedPos = camara.transform.InverseTransformDirection(normalizedPos);
+			//Asignado de indice
+			pos = new Vector4(normalizedPos.x, normalizedPos.y, normalizedPos.z, trazaIdActual);
+		}
+		else
+		{
+			nPuntosActuales++;
+			if (nPuntosActuales >= nPuntosMax) nPuntosActuales = nPuntosMax;
+			pos = Input.mousePosition;
+			pos.w = trazaIdActual;
+		}
+		puntos.Add(pos);
+	}
+
+	private void GrabarTraza()
+	{
+		trazaIdActual++;
+	}
+
 	private void Awake()
 	{
 		nPuntosActuales = 0;
-		puntos = new BufferCircular<Vector3>(nPuntosMax);
+		puntos = new BufferCircular<Vector4>(nPuntosMax);
 		if (pencil == null) usingPencil = false;
-	}
-
-	private void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.Mouse0))
-		{
-			trazando = true;
-		}
-		else if (Input.GetKeyUp(KeyCode.Mouse0))
-		{
-			trazando = false;
-			GrabarTraza();
-		}
-
-		if(Input.GetKeyDown(KeyCode.Space))
-		{
-			TerminarGesto();
-		}
 	}
 
 	private void FixedUpdate()

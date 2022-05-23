@@ -41,7 +41,7 @@ public class SpellConstructor : MonoBehaviour
 		{
 			{'P',1},
 			{'T',2},
-			{'E',3},
+			{'S',3},
 			{'M',4},
 			{'(',0},
 			{')',0}
@@ -71,7 +71,7 @@ public class SpellConstructor : MonoBehaviour
 		};
 
 		// Ejemplo de cadena:
-		// "P0TFEPMHZZDDD-(P3TEEEM-)"  ->
+		// "P0TFSPMHZZDDD-(P3TESEM-)"  ->
 		// Pilar de fuego grande y de larga duración que crea una explosión estándar al golpear un interactuable
 
 		procesados = new Action<char>[6];
