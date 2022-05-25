@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Interactuable
+  - SuperLlave
   layers:
   - Default
   - TransparentFX
@@ -14,9 +15,9 @@ TagManager:
   - UI
   - Light
   - Lock
-  - 
-  - 
-  - 
+  - SuperLlave
+  - Suelo
+  - Jugador
   - 
   - 
   - 

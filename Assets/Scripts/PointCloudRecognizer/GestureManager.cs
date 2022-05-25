@@ -81,7 +81,7 @@ public class GestureManager : MonoBehaviour
 		Vector3[] b = new Vector3[a.Length];
 		for(int i = 0; i < a.Length; i++)
 		{
-			b[i] = camara.ScreenToWorldPoint(new Vector3(a[i].x, a[i].y, a[i].z));
+			b[i] = new Vector3(a[i].x, a[i].y, a[i].z);
 		}
 		line.SetPositions(b);
 	}
@@ -110,9 +110,10 @@ public class GestureManager : MonoBehaviour
 		Vector4 pos;
 		if (usingPencil) //No testeado
 		{
+			nPuntosActuales++;
+			if (nPuntosActuales >= nPuntosMax) nPuntosActuales = nPuntosMax;
 			//Normalizacion de Posicion
-			Vector3 normalizedPos = pencil.position - camara.transform.position;
-			normalizedPos = camara.transform.InverseTransformDirection(normalizedPos);
+			Vector3 normalizedPos = camara.transform.InverseTransformPoint(pencil.position);
 			//Asignado de indice
 			pos = new Vector4(normalizedPos.x, normalizedPos.y, normalizedPos.z, trazaIdActual);
 		}

@@ -15,6 +15,6 @@ public class HandController : MonoBehaviour
     void Update()
     {
         hand.SetGrip(controller.selectAction.action.ReadValue<float>());
-        hand.SetTrigger(controller.selectAction.action.ReadValue<float>());
+        hand.SetTrigger(controller.activateAction.action.ReadValue<float>());
     }
 }

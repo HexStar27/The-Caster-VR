@@ -108,8 +108,8 @@ public class SpellV1 : SpellStructure
 		this._efecto = efecto;
 
 		_referenciaCasteoPorTrigger.localPosition = efecto.nextCastPosition;
-		if (efecto.animController != null) 
-			_anim.runtimeAnimatorController = efecto.animController;
+		//if (efecto.animController != null) 
+			//_anim.runtimeAnimatorController = efecto.animController;
 		if (efecto.mesh != null) _meshFil.mesh = efecto.mesh;
 		if (efecto.meshColision != null) _meshCol.sharedMesh = efecto.mesh;
 	}

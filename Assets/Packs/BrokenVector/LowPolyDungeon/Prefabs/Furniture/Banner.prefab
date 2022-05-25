@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 4604552626866680805}
   - component: {fileID: 1730050202505185071}
   - component: {fileID: 2316854688227896739}
-  m_Layer: 0
+  - component: {fileID: 2075472856}
+  m_Layer: 9
   m_Name: Banner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,9 +27,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 216915012680525562}
-  m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -97,3 +98,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 8528105395200891291, guid: b6e99e0c07eb2d04098b9c9515d5d165, type: 3}
+--- !u!114 &2075472856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216915012680525562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efad1f01b15e82d408e7dfc492e536b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderer: {fileID: 0}
+  _col: {fileID: 0}
+  constitucionInicial: 10
+  debilidadFuego: 2
+  tiempoFuego: 0
+  mojadez: 0
+  materialPropio: {fileID: 0}

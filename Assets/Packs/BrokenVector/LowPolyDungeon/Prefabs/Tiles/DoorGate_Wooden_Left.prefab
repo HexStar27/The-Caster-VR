@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 6322556187634454354}
   - component: {fileID: 6322556187635551634}
   - component: {fileID: 6322556187633357649}
-  m_Layer: 0
+  - component: {fileID: 1883644589}
+  m_Layer: 9
   m_Name: DoorGate_Wooden_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,11 +30,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6322556187634454354
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -53,7 +53,6 @@ MeshRenderer:
   m_CastShadows: 2
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
@@ -99,3 +98,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4354981115837747572, guid: 3ff66bdc0340eff42b48c79a6f8f0a21, type: 3}
+--- !u!114 &1883644589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6322556187633357650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06a8a167f04a7134e98491818ab9a65f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  abrir: Abrir
+  llave: SuperLlave

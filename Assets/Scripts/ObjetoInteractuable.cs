@@ -9,14 +9,18 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ObjetoInteractuable : MonoBehaviour
 {
     // Consexiones
-    private Renderer _renderer;
-    private Collider _col;
+    public Renderer _renderer;
+    public Collider _col;
     private Rigidbody _rb;
     public Dictionary<string,Action<double>> interacciones = new Dictionary<string, Action<double>>();
+
+    public class OnEvent : UnityEvent { }
+    public OnEvent onDestroy = new OnEvent();
 
     // Getters & Setters
     public double ConstitucionRestante
@@ -27,6 +31,7 @@ public class ObjetoInteractuable : MonoBehaviour
             constitucionRestante = value;
             if (ConstitucionRestante <= 0)
             {
+                onDestroy.Invoke();
                 gameObject.SetActive(false);
             }
         }
@@ -58,10 +63,10 @@ public class ObjetoInteractuable : MonoBehaviour
     [SerializeField] double constitucionInicial = 10;
     [SerializeField] double debilidadFuego = 0, tiempoFuego = 0, mojadez = 0;
     float friccionD,friccionS;
-    float old_vel;
+    float old_vel = 0;
 
     //Materiales
-    Material materialPropio;
+    public Material materialPropio;
     int materialActual = 0;
     GameObject particulillas;
 
@@ -69,9 +74,9 @@ public class ObjetoInteractuable : MonoBehaviour
     {
         if (_col == null) if(!TryGetComponent(out _col)) Debug.LogError("FALTA COLLIDER");
         if (_rb == null) if(!TryGetComponent(out _rb)) Debug.LogError("FALTA RIGIDBODY");
-        if (_renderer == null) if (!TryGetComponent(out _renderer)) Debug.LogError("FALTA RENDERER???");
+        if (_renderer == null) if (!TryGetComponent(out _renderer)) Debug.LogError("FALTA RENDERER??? :"+gameObject.name);
 
-        materialPropio = _renderer.material;
+        if (materialPropio == null) materialPropio = _renderer.material;
 
         interacciones.Add("Quemar", Quemar);
         interacciones.Add("Desintegrar", Desintegrar);
@@ -81,12 +86,11 @@ public class ObjetoInteractuable : MonoBehaviour
 
     private void OnEnable()
     {
-        CambiarMaterial(0);
         friccionD = _col.material.dynamicFriction;
         friccionS = _col.material.staticFriction;
 
         ConstitucionRestante = constitucionInicial;
-        TiempoFuego = 0;
+        //TiempoFuego = 0;
         Mojadez = 0;
         _rb.angularDrag = 0.05f;
     }
@@ -166,7 +170,7 @@ public class ObjetoInteractuable : MonoBehaviour
 
             //Aplicar partículas
             if (particulillas != null) Destroy(particulillas);
-            if(material != 0) particulillas = Instantiate(BancoEstadosInteractuables.Instancia.particleSystems[material], transform);
+            //if(material != 0) particulillas = Instantiate(BancoEstadosInteractuables.Instancia.particleSystems[material], transform);
         }
     }
 

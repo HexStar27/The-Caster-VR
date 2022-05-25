@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 4179086729702229121}
   - component: {fileID: 5195949714194962269}
   - component: {fileID: 8453485924056819769}
-  m_Layer: 0
+  - component: {fileID: 5071631061927457232}
+  m_Layer: 9
   m_Name: Table_Small
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,3 +114,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5071631061927457232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4179086729700039233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efad1f01b15e82d408e7dfc492e536b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderer: {fileID: 0}
+  _col: {fileID: 0}
+  constitucionInicial: 20
+  debilidadFuego: 2
+  tiempoFuego: 0
+  mojadez: 0
+  materialPropio: {fileID: 0}

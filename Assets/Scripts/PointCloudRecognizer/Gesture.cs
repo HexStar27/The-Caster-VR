@@ -215,7 +215,10 @@ namespace PDollarGestureRecognizer
                             // add interpolated point
                             float t = Math.Min(Math.Max((I - D) / d, 0.0f), 1.0f);
                             if (float.IsNaN(t)) t = 0.5f;
-                            newPoints[numPoints++] = new Point( (1.0f - t) * firstPoint.pos + t * points[i].pos, points[i].StrokeID ); //
+
+                            Vector3 aa = points[i].pos;
+                            int sID = points[i].StrokeID;
+                            newPoints[numPoints++] = new Point( (1.0f - t) * firstPoint.pos + t * aa, sID); //
 
                             // update partial length
                             d = D + d - I;

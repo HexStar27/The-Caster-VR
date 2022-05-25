@@ -15,6 +15,8 @@ public class LockOpener : MonoBehaviour
         {
             collision.gameObject.SetActive(false); //Alomejor lo cambio por una llamada o una animación, o no
             onUse.Invoke();
+
+            Destroy(gameObject);
         }
     }
 }

@@ -51,6 +51,6 @@ public class Hand : MonoBehaviour
 
     public void ToogleVisibility()
     {
-        mesh.enabled = !mesh.enabled;
+        //mesh.enabled = !mesh.enabled;
     }
 }
